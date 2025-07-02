@@ -12,10 +12,27 @@ interface IRegistration {
 }
 
 export default function registration(): void {
-  const formAuthorization = document.getElementById(
+  document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+  <header></header>
+  <main class='main'>
+    <div class="container">
+      <div class="registration">
+        <form action="" id="form-registration" method="post">
+          <input type="email" name="email" id="form-email">
+          <input type="password" name="password" id="form-password">
+
+          <button type="submit">Sign up</button>
+        </form>
+      </div>
+      <a href="/authorization" data-link>авторизация</a>
+    </div>
+  </main>
+  <footer></footer>
+  `;
+  const formRegistration = document.getElementById(
     "form-registration"
   ) as HTMLFormElement;
-  const divAuthorization = document.querySelector(
+  const divRegistration = document.querySelector(
     ".registration"
   ) as HTMLDivElement;
 
@@ -48,7 +65,7 @@ export default function registration(): void {
     }
   };
 
-  formAuthorization?.addEventListener("submit", async (e): Promise<void> => {
+  formRegistration?.addEventListener("submit", async (e): Promise<void> => {
     e.preventDefault();
 
     const emailElement = document.getElementById(
@@ -62,13 +79,13 @@ export default function registration(): void {
     const password = passwordElement.value.trim();
 
     const message = document.createElement("p") as HTMLParagraphElement;
-    const existing = divAuthorization?.querySelector("p");
+    const existing = divRegistration?.querySelector("p");
     if (existing) existing.remove();
 
     if (!email || !password) {
       message.textContent = "Введите email и пароль";
       message.style.color = "red";
-      divAuthorization.append(message);
+      divRegistration.append(message);
       return;
     }
 
@@ -77,13 +94,13 @@ export default function registration(): void {
     if (!result || result.message !== "Вы успешно зарегистрировались") {
       message.textContent = "Email уже занят";
       message.style.color = "red";
-      divAuthorization.append(message);
+      divRegistration.append(message);
       return;
     }
 
     message.textContent = "Вы успешно зарегистрировались";
     message.style.color = "green";
-    divAuthorization.append(message);
+    divRegistration.append(message);
 
     setTimeout((): void => {
       window.location.href = "../index.html";

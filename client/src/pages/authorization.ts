@@ -3,6 +3,23 @@ interface IAuthorization {
 }
 
 export default function authorization(): void {
+  document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+  <header></header>
+    <main class="main">
+        <div class="container">
+            <div class="authorization">
+                <form action="" id="form-authorization" method="post">
+                    <input type="email" name="email" id="form-email">
+                    <input type="password" name="password" id="form-password">
+
+                    <button type="submit">Sign in</button>
+                </form>
+            </div>
+            <a href="/registration" data-link>регистрация</a>
+        </div>
+    </main>
+  <footer></footer>
+  `;
   const formAuthorization = document.getElementById(
     "form-authorization"
   ) as HTMLFormElement;
