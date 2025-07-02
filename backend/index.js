@@ -3,11 +3,20 @@ import express, { json } from "express";
 import { sequelize } from "./database/sequelize.js";
 import { User } from "./models/User.js";
 import { userRouter } from "./routes/UserRoute.js";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 app.use(json());
+
+app.use(
+  cors({
+    origin: ["http://localhost:5500", "http://127.0.0.1:5500"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 const connectDB = async () => {
   try {
@@ -22,7 +31,7 @@ const connectDB = async () => {
 
 app.use("/api/user", userRouter);
 
-app.listen(process.env.PORT , () => {
+app.listen(process.env.PORT, () => {
   connectDB();
   console.log(`Server started ${process.env.PORT}`);
 });
