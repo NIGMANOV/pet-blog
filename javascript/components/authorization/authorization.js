@@ -12,7 +12,7 @@ export default function authorization() {
     const divAuthorization = document.querySelector(".authorization");
     const apiAuthorization = (email, password) => __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch("http://localhost:4447/api/user/authorization", {
+            const response = yield fetch("http://localhost:4448/api/user/authorization", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -23,6 +23,7 @@ export default function authorization() {
                 throw new Error(`Ошибка сервера: ${response.status}`);
             }
             const data = yield response.json();
+            console.log(data);
             return data;
         }
         catch (error) {

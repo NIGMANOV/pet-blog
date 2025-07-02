@@ -1,14 +1,5 @@
-interface IUser {
-  id: number;
-  email: string;
-  password: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 interface IAuthorization {
   message: string;
-  user: IUser;
 }
 
 export default function authorization(): void {
@@ -25,7 +16,7 @@ export default function authorization(): void {
   ): Promise<IAuthorization | null> => {
     try {
       const response = await fetch(
-        "http://localhost:4447/api/user/authorization",
+        "http://localhost:4448/api/user/authorization",
         {
           method: "POST",
           headers: {
@@ -40,6 +31,8 @@ export default function authorization(): void {
       }
 
       const data: IAuthorization = await response.json();
+      console.log(data);
+
       return data;
     } catch (error) {
       console.error(error);
