@@ -26,6 +26,7 @@ export default function home(): void {
 const btnLogout = document.getElementById('logout-btn') as HTMLButtonElement
 
 btnLogout.addEventListener('click', (e): void => {
+    e.preventDefault()
     window.location.href = '/'
 })
 }
