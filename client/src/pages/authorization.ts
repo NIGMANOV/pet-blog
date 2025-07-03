@@ -4,27 +4,46 @@ interface IAuthorization {
 
 export default function authorization(): void {
   document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <header></header>
-    <main class="main">
-        <div class="container">
-            <div class="authorization">
-                <form action="" id="form-authorization" method="post">
-                    <input type="email" name="email" id="form-email">
-                    <input type="password" name="password" id="form-password">
+    <header></header>
+<main class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Авторизация</h2>
 
-                    <button type="submit">Sign in</button>
-                </form>
-            </div>
-            <a href="/registration" data-link>регистрация</a>
-        </div>
-    </main>
-  <footer></footer>
-  `;
+    <!-- Контейнер для вывода сообщений -->
+    <div id="authorization-message"></div>
+
+    <form action="" id="form-authorization" method="post" class="space-y-4">
+      <div>
+        <label for="form-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" name="email" id="form-email" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <div>
+        <label for="form-password" class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
+        <input type="password" name="password" id="form-password" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <button type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+        Sign in
+      </button>
+    </form>
+
+    <p class="mt-4 text-center text-sm text-gray-600">
+      Нет аккаунта?
+      <a href="/registration" data-link class="text-blue-600 hover:underline">Регистрация</a>
+    </p>
+  </div>
+</main>
+    <footer></footer>
+    `;
   const formAuthorization = document.getElementById(
     "form-authorization"
   ) as HTMLFormElement;
-  const divAuthorization = document.querySelector(
-    ".authorization"
+  const divAuthorization = document.getElementById(
+    "authorization-message"
   ) as HTMLDivElement;
 
   const apiAuthorization = async (
@@ -33,7 +52,7 @@ export default function authorization(): void {
   ): Promise<IAuthorization | null> => {
     try {
       const response = await fetch(
-        "http://localhost:4448/api/user/authorization",
+        "http://localhost:4450/api/user/authorization",
         {
           method: "POST",
           headers: {
@@ -71,13 +90,21 @@ export default function authorization(): void {
     const password = passwordElement.value.trim();
 
     const message = document.createElement("p") as HTMLParagraphElement;
+    message.className =
+      "mt-4 mb-4 text-sm font-medium px-4 py-2 rounded-lg text-center";
+
     const existing = divAuthorization?.querySelector("p");
     if (existing) existing.remove();
 
     if (!email || !password) {
       message.textContent = "Введите логин и пароль";
-      message.style.color = "red";
-      divAuthorization.append(message);
+      message.classList.add(
+        "text-red-600",
+        "bg-red-100",
+        "border",
+        "border-red-300"
+      );
+      divAuthorization?.appendChild(message);
       return;
     }
 
@@ -85,17 +112,31 @@ export default function authorization(): void {
 
     if (!result || result.message !== "Вы успешно авторизовались") {
       message.textContent = "Неверный логин или пароль";
-      message.style.color = "red";
-      divAuthorization.append(message);
+      message.classList.add(
+        "text-red-600",
+        "bg-red-100",
+        "border",
+        "border-red-300"
+      );
+      divAuthorization?.appendChild(message);
       return;
     }
 
     message.textContent = "Вы успешно авторизовались";
-    message.style.color = "green";
-    divAuthorization.append(message);
+    message.classList.add(
+      "text-green-700",
+      "bg-green-100",
+      "border",
+      "border-green-300"
+    );
+    divAuthorization?.appendChild(message);
 
     setTimeout((): void => {
-      window.location.href = "../pages/main.html";
+      message.remove(); // Убираем сообщение
+    }, 2000);
+
+    setTimeout((): void => {
+      window.location.href = "https://gshop.uz/";
     }, 2000);
   });
 }
