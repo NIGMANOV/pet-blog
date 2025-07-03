@@ -60,7 +60,7 @@ export default function registration(): void {
   ): Promise<IRegistration | null> => {
     try {
       const response = await fetch(
-        "http://localhost:4450/api/user/registration",
+        "http://localhost:4451/api/user/registration",
         {
           method: "POST",
           headers: {

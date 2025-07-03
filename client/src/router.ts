@@ -1,5 +1,6 @@
 import renderAuthorization from "./pages/authorization";
 import renderRegistration from "./pages/registration";
+import renderHome from "./pages/home";
 
 export function router(path: string): void {
   switch (path) {
@@ -9,6 +10,9 @@ export function router(path: string): void {
     case "/registration":
       renderRegistration();
       break;
+      case "/home":
+        renderHome();
+        break;
     default:
       document.querySelector("#app")!.innerHTML = `
   <main class="min-h-screen flex items-center justify-center bg-gray-100">

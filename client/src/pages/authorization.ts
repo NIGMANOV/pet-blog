@@ -52,7 +52,7 @@ export default function authorization(): void {
   ): Promise<IAuthorization | null> => {
     try {
       const response = await fetch(
-        "http://localhost:4450/api/user/authorization",
+        "http://localhost:4451/api/user/authorization",
         {
           method: "POST",
           headers: {
@@ -136,7 +136,7 @@ export default function authorization(): void {
     }, 2000);
 
     setTimeout((): void => {
-      window.location.href = "https://gshop.uz/";
+      window.location.href = "/home";
     }, 2000);
   });
 }
